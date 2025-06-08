@@ -1,0 +1,4 @@
+{
+  "java.compile.nullAnalysis.mode": "automatic",
+  "python.analysis.extraPaths": ["./clinica_veterinaria_serv2"]
+}

@@ -1,0 +1,5 @@
+# Requirements for the Clinica Veterinaria Service 2
+Flask==2.3.3
+pymongo==4.5.0
+python-dotenv==1.0.0
+bson==0.5.10
