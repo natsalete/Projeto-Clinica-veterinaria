@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão - Clínica Veterinária</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐾 Clínica Veterinária</h1>
+            <p class="subtitle">Sistema de Gestão Integrado</p>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('especies')">Espécies</button>
+            <button class="nav-tab" onclick="showTab('pets')">Pets</button>
+            <button class="nav-tab" onclick="showTab('funcionarios')">Funcionários</button>
+            <button class="nav-tab" onclick="showTab('agendamentos')">Agendamentos</button>
+            <button class="nav-tab" onclick="showTab('relatorios')">Relatórios</button>
+        </nav>
+
+        <!-- Tab Espécies -->
+        <div id="especies" class="tab-content active">
+            <div class="form-section">
+                <h3>Cadastro de Espécies</h3>
+                <form id="especieForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome_especie">Nome da Espécie:</label>
+                            <input type="text" id="nome_especie" name="nome_especie" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo_animal">Tipo Animal:</label>
+                            <select id="tipo_animal" name="tipo_animal" required>
+                                <option value="">Selecione...</option>
+                                <option value="DOMESTICO">Doméstico</option>
+                                <option value="SILVESTRE">Selvagem</option>
+                                <option value="EXOTICO">Exótico</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao_especie">Descrição:</label>
+                        <textarea id="descricao_especie" name="descricao" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Salvar Espécie</button>
+                    <button type="button" class="btn btn-warning" onclick="limparFormEspecie()">Limpar</button>
+                </form>
+            </div>
+
+            <div id="alertEspecie"></div>
+            
+            <div class="table-container">
+                <h3>Lista de Espécies</h3>
+                <button class="btn" onclick="carregarEspecies()">Atualizar Lista</button>
+                <table id="especiesTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="especiesTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Pets -->
+        <div id="pets" class="tab-content">
+            <div class="form-section">
+                <h3>Cadastro de Pets</h3>
+                <form id="petForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome_pet">Nome do Pet:</label>
+                            <input type="text" id="nome_pet" name="nome_pet" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_especie">Espécie:</label>
+                            <select id="id_especie" name="id_especie" required>
+                                <option value="">Selecione uma espécie...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="sexo">Sexo:</label>
+                            <select id="sexo" name="sexo" required>
+                                <option value="">Selecione...</option>
+                                <option value="MACHO">Macho</option>
+                                <option value="FEMEA">Fêmea</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="data_cadastro">Data de Cadastro:</label>
+                            <input type="date" id="data_cadastro" name="data_cadastro" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome_proprietario">Nome do Proprietário:</label>
+                            <input type="text" id="nome_proprietario" name="nome_proprietario" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone_proprietario">Telefone:</label>
+                            <input type="text" id="telefone_proprietario" name="telefone_proprietario" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Salvar Pet</button>
+                    <button type="button" class="btn btn-warning" onclick="limparFormPet()">Limpar</button>
+                </form>
+            </div>
+
+            <div id="alertPet"></div>
+            
+            <div class="table-container">
+                <h3>Lista de Pets</h3>
+                <button class="btn" onclick="carregarPets()">Atualizar Lista</button>
+                <table id="petsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Espécie</th>
+                            <th>Sexo</th>
+                            <th>Proprietário</th>
+                            <th>Telefone</th>
+                            <th>Data Cadastro</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="petsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Funcionários -->
+        <div id="funcionarios" class="tab-content">
+            <div class="form-section">
+                <h3>Cadastro de Funcionários</h3>
+                <form id="funcionarioForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome_funcionario">Nome:</label>
+                            <input type="text" id="nome_funcionario" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cargo">Cargo:</label>
+                            <select id="cargo" name="cargo" required>
+                                <option value="">Selecione...</option>
+                                <option value="VETERINARIO">Veterinário</option>
+                                <option value="AUXILIAR">Auxiliar</option>
+                                <option value="RECEPCIONISTA">Recepcionista</option>
+                                <option value="GERENTE">Gerente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="telefone_funcionario">Telefone:</label>
+                            <input type="text" id="telefone_funcionario" name="telefone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ativo">Status:</label>
+                            <select id="ativo" name="ativo" required>
+                                <option value="1">Ativo</option>
+                                <option value="0">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Salvar Funcionário</button>
+                    <button type="button" class="btn btn-warning" onclick="limparFormFuncionario()">Limpar</button>
+                </form>
+            </div>
+
+            <div id="alertFuncionario"></div>
+            
+            <div class="table-container">
+                <h3>Lista de Funcionários</h3>
+                <button class="btn" onclick="carregarFuncionarios()">Atualizar Lista</button>
+                <table id="funcionariosTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Cargo</th>
+                            <th>Telefone</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="funcionariosTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Agendamentos -->
+        <div id="agendamentos" class="tab-content">
+            <div class="form-section">
+                <h3>Cadastro de Agendamentos</h3>
+                <form id="agendamentoForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="idPet">Pet:</label>
+                            <select id="idPet" name="idPet" required>
+                                <option value="">Selecione um pet...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dataAgendamento">Data/Hora:</label>
+                            <input type="datetime-local" id="dataAgendamento" name="dataAgendamento" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tipoServico">Tipo de Serviço:</label>
+                            <select id="tipoServico" name="tipoServico" required>
+                                <option value="">Selecione...</option>
+                                <option value="CONSULTA">Consulta</option>
+                                <option value="CIRURGIA">Cirurgia</option>
+                                <option value="VACINACAO">Vacina</option>
+                                <option value="EXAME">Exame</option>
+                                <option value="BANHO_TOSA">Banho Tosa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="statusAgendamento">Status:</label>
+                            <select id="statusAgendamento" name="statusAgendamento" required>
+                                <option value="">Selecione...</option>
+                                <option value="AGENDADO">Agendado</option>
+                                <option value="CONFIRMADO">Confirmado</option>
+                                <option value="CANCELADO">Cancelado</option>
+                                <option value="REALIZADO">Realizado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="idFuncionario">Veterinário:</label>
+                            <select id="idFuncionario" name="idFuncionario" required>
+                                <option value="">Selecione um veterinário...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="valorEstimado">Valor Estimado:</label>
+                            <input type="number" id="valorEstimado" name="valorEstimado" step="0.01" min="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="observacoes">Observações:</label>
+                        <textarea id="observacoes" name="observacoes" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Salvar Agendamento</button>
+                    <button type="button" class="btn btn-warning" onclick="limparFormAgendamento()">Limpar</button>
+                </form>
+            </div>
+
+            <div id="alertAgendamento"></div>
+            
+            <div class="table-container">
+                <h3>Lista de Agendamentos</h3>
+                <button class="btn" onclick="carregarAgendamentos()">Atualizar Lista</button>
+                <table id="agendamentosTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Pet</th>
+                            <th>Data/Hora</th>
+                            <th>Serviço</th>
+                            <th>Status</th>
+                            <th>Veterinário</th>
+                            <th>Valor</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="agendamentosTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab Relatórios -->
+        <div id="relatorios" class="tab-content">
+            <div class="form-section">
+                <h3>Relatórios</h3>
+                <button class="btn" onclick="carregarPetsComEspecies()">Pets com Espécies</button>
+                <button class="btn" onclick="carregarPetsComAgendamentos()">Pets com Agendamentos</button>
+            </div>
+
+            <div id="alertRelatorio"></div>
+            
+            <div class="table-container">
+                <h3 id="relatorioTitle">Selecione um relatório</h3>
+                <div id="relatorioContent">
+                    <p style="text-align: center; color: #666; padding: 40px;">
+                        Clique em um dos botões acima para visualizar os relatórios
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
