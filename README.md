@@ -1,5 +1,4 @@
-﻿# Projeto-Clinica-veterinaria
-# Sistema de Gestão para Clínica Veterinária
+﻿# Sistema de Gestão para Clínica Veterinária
 
 Sistema completo para gerenciamento de clínica veterinária desenvolvido com arquitetura de microsserviços, utilizando diferentes tecnologias para cada serviço específico.
 
