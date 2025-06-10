@@ -163,7 +163,7 @@ npx serve .
 ```
 
 ## 🌐 APIs e Endpoints
-Link da documentação das APIs: https://documenter.getpostman.com/view/39398509/2sB2x5GCLc
+Link documentação das APIs: https://documenter.getpostman.com/view/39398509/2sB2x5GCLc
 
 ## 🤝 Contribuição
 
